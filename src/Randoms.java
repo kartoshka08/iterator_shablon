@@ -9,8 +9,8 @@ public class Randoms implements Iterable<Integer> {
 
     public Randoms(int min, int max) {
         MIN = min;
-        MAX = max;
-        random.nextInt(min, max);
+        MAX = max + 1;
+        random.nextInt(min, max + 1);
     }
 
     @Override
@@ -20,19 +20,13 @@ public class Randoms implements Iterable<Integer> {
 
             @Override
             public boolean hasNext() {
-                if (next == 0) {
-                    return false;
-                } else return true;
+                return true;
             }
 
             @Override
             public Integer next() {
-                if (hasNext()) {
-                    return next;
-                } else {
-                    next = random.nextInt(MIN, MAX);
-                    return next;
-                }
+                next = random.nextInt(MIN, MAX);
+                return next;
             }
         };
     }

@@ -4,49 +4,34 @@ import java.util.List;
 import java.util.Random;
 
 public class Randoms implements Iterable<Integer> {
-    protected Random random= new Random();
-    List<Integer> randomList = new ArrayList<>();
+    protected Random random = new Random();
+    protected int MIN, MAX;
 
     public Randoms(int min, int max) {
-        for (int i = 0; i < 1000; i ++){
-            randomList.add(random.nextInt(min, max+1));
-        }
+        MIN = min;
+        MAX = max;
+        random.nextInt(min, max);
     }
 
     @Override
     public Iterator<Integer> iterator() {
         return new Iterator<>() {
-            boolean isList = true;
             int next = 0;
-
 
             @Override
             public boolean hasNext() {
-                if (isList) {
-                    if (next < randomList.size()) {
-                        return true;
-                    } else return isList;
-                } else return false;
+                if (next == 0) {
+                    return false;
+                } else return true;
             }
 
             @Override
             public Integer next() {
-                if (isList) {
-                    if (next < randomList.size()){
-                        int nextRan = randomList.get(next);
-                        next++;
-                        return nextRan;
-                    }else{
-                        int nextRan = randomList.get(0);
-                        next = 1;
-                        return nextRan;
-                    }
-                }
-                else {
-                    isList = false;
-                    int nextRan = 0;
-                    next = 0;
-                    return nextRan;
+                if (hasNext()) {
+                    return next;
+                } else {
+                    next = random.nextInt(MIN, MAX);
+                    return next;
                 }
             }
         };
